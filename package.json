@@ -1,7 +1,7 @@
 {
   "name": "hwp-attributes-plugin",
   "version": "1.0.0",
-  "description": "",
+  "description": "Plugin to add various attributes to script tags injected by html-webpack-plugin",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -11,7 +11,15 @@
     "type": "git",
     "url": "git+https://github.com/sjinks/hwp-attributes-plugin.git"
   },
-  "keywords": [],
+  "keywords": [
+    "webpack",
+    "plugin",
+    "html-webpack-plugin",
+    "async",
+    "defer",
+    "module",
+    "nomodule"
+  ],
   "author": "Volodymyr Kolesnykov <volodymyr@wildwolf.name> (https://wildwolf.name/)",
   "license": "MIT",
   "bugs": {
@@ -49,6 +57,5 @@
   },
   "peerDependencies": {
     "html-webpack-plugin": "^4.0.0"
-  },
-  "optionalDependencies": {}
+  }
 }
