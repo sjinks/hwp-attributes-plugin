@@ -1,5 +1,7 @@
 # hwp-attributes-plugin
 
+![CI](https://github.com/sjinks/hwp-attributes-plugin/workflows/CI/badge.svg)
+
 Plugin to add various attributes to script tags injected by [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)
 
 ## Installation
