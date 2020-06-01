@@ -64,7 +64,7 @@ describe('HwpAttributesPlugin', (): void => {
                 scripts.each((index, element: CheerioElement): void => {
                     const keys = Object.keys(element.attribs);
                     expect(keys).toContain('src');
-                    expect(keys).not.toContain('module');
+                    expect(keys).not.toContain('type');
                     expect(keys).not.toContain('nomodule');
                     expect(keys).not.toContain('async');
                     expect(keys).not.toContain('defer');
@@ -107,19 +107,20 @@ describe('HwpAttributesPlugin', (): void => {
                 expect(script3.get()).toHaveLength(1);
 
                 let keys = Object.keys((script1.get(0) as CheerioElement).attribs);
-                expect(keys).toContain('module');
+                expect(keys).toContain('type');
+                expect((script1.get(0) as CheerioElement).attribs['type']).toBe('module');
                 expect(keys).not.toContain('nomodule');
                 expect(keys).not.toContain('async');
                 expect(keys).not.toContain('defer');
 
                 keys = Object.keys((script2.get(0) as CheerioElement).attribs);
-                expect(keys).not.toContain('module');
+                expect(keys).not.toContain('type');
                 expect(keys).not.toContain('nomodule');
                 expect(keys).toContain('async');
                 expect(keys).toContain('defer');
 
                 keys = Object.keys((script3.get(0) as CheerioElement).attribs);
-                expect(keys).not.toContain('module');
+                expect(keys).not.toContain('type');
                 expect(keys).toContain('nomodule');
                 expect(keys).not.toContain('async');
                 expect(keys).not.toContain('defer');

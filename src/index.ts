@@ -56,7 +56,7 @@ export class HwpAttributesPlugin {
                     );
 
                     if (module) {
-                        asset.attributes.module = true;
+                        asset.attributes.type = 'module';
                     } else if (nomodule) {
                         asset.attributes.nomodule = true;
                     }
