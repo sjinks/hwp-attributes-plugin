@@ -34,7 +34,7 @@
   "typings": "dist/index.d.ts",
   "devDependencies": {
     "@types/cheerio": "^0.22.21",
-    "@types/jest": "^26.0.8",
+    "@types/jest": "^26.0.9",
     "@types/minimatch": "^3.0.3",
     "@types/webpack": "^4.41.21",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
