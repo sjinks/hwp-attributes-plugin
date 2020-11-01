@@ -6,4 +6,7 @@ module.exports = merge.recursive(ts_preset, {
         '<rootDir>/dist/',
         '<rootDir>/node_modules/',
     ],
+    collectCoverageFrom: [
+        '<rootDir>/src/*.ts',
+    ],
 });
