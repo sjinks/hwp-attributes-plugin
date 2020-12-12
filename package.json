@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "pretest": "npm run lint",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
