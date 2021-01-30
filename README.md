@@ -30,12 +30,12 @@ export default {
 };
 ```
 
-To configure the plugin, just pass an object with the following keys to its constructor (all keys are optional):
-  * `module`: patterns of scripts which should have `module` attribute added;
-  * `nomodule`: patterns of scripts which should have `nomodule` attribute added;
-  * `async`: patterns of scripts which should have `async` attribute added;
-  * `defer`: patterns of scripts which should have `defer` attribute added.
+To configure the plugin, pass an object with the following keys to its constructor (all keys are optional):
+  * `module`: patterns of scripts that should have the `module` attribute added;
+  * `nomodule`: patterns of scripts that should have the `nomodule` attribute added;
+  * `async`: patterns of scripts that should have the `async` attribute added;
+  * `defer`: patterns of scripts that should have the `defer` attribute added.
 
-Pattern matching is performed with the help of [minimatch](https://www.npmjs.com/package/minimatch).
+The plugin performs pattern matching with the help of [minimatch](https://www.npmjs.com/package/minimatch).
 
-`module` and `nomodule` attributes are mutually exclusive, `module` takes precedence. That is, if the same file matches both `module` and `nomodule` patterns, it will have `module` attribute.
+The `module` and `nomodule` attributes are mutually exclusive, `module` takes precedence. If the same file matches both `module` and `nomodule` patterns, it will have the `module` attribute.
