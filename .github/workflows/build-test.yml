@@ -44,7 +44,7 @@ jobs:
         run: npm cit
 
       - name: Build
-        run: nom run build
+        run: npm run build
 
   release:
     name: Prepare the release
