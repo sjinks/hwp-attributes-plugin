@@ -43,9 +43,6 @@ jobs:
       - name: Clean install and test
         run: npm cit
 
-      - name: Build
-        run: npm run build
-
   release:
     name: Prepare the release
     runs-on: ubuntu-latest
