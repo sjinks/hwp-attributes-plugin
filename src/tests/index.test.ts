@@ -3,10 +3,11 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { fs, vol } from 'memfs';
 import cheerio from 'cheerio';
-import { HwpAttributesPlugin } from '../index';
+import { HwpAttributesPlugin } from '../';
 
 const hwpOptions: HtmlWebpackPlugin.Options = {
     filename: 'index.html',
+    scriptLoading: 'blocking',
     hash: false,
     minify: {
         collapseWhitespace: true,
@@ -28,13 +29,30 @@ const webpackConfig: webpack.Configuration = {
     },
 };
 
-const filesystem: webpack.OutputFileSystem = {
+const writeFile = (arg0: string, arg1: string | Buffer, arg2: (arg0?: NodeJS.ErrnoException) => void): void =>
+    fs.writeFile(arg0, arg1, (error) => arg2(error || undefined));
+
+const mkdir = (arg0: string, arg1: (arg0?: NodeJS.ErrnoException) => void): void =>
+    fs.mkdir(arg0, (error) => arg1(error || undefined));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const stat = (arg0: string, arg1: (arg0?: NodeJS.ErrnoException, arg1?: any) => void): void =>
+    fs.stat(arg0, (error, stats) => arg1(error || undefined, stats));
+
+const readFile = (arg0: string, arg1: (arg0?: NodeJS.ErrnoException, arg1?: string | Buffer) => void): void =>
+    fs.readFile(arg0, (error, buf) => arg1(error || undefined, buf));
+
+const filesystem = {
     join: path.join,
-    mkdir: fs.mkdir,
+    mkdir: mkdir,
     mkdirp: fs.mkdirp,
     rmdir: fs.rmdir,
     unlink: fs.unlink,
-    writeFile: fs.writeFile,
+    writeFile: writeFile,
+    stat: stat,
+    readFile: readFile,
+    relative: path.relative,
+    dirname: path.dirname,
 };
 
 function getOutput(): string {

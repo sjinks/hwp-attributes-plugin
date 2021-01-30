@@ -24,7 +24,7 @@ export class HwpAttributesPlugin {
     }
 
     public apply(compiler: webpack.Compiler): void {
-        compiler.hooks.compilation.tap(PLUGIN, (compilation: webpack.compilation.Compilation): void => {
+        compiler.hooks.compilation.tap(PLUGIN, (compilation: webpack.Compilation): void => {
             const hooks = HtmlWebpackPlugin.getHooks(compilation);
             hooks.alterAssetTags.tapAsync(PLUGIN, (data, cb): unknown => {
                 data.assetTags.scripts = this._transformAssets(data.assetTags.scripts);
