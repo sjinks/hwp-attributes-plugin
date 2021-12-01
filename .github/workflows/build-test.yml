@@ -1,4 +1,4 @@
-name: CI
+name: Build & Test CI
 
 on:
   push:
@@ -35,27 +35,20 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && (!startsWith(github.ref, 'refs/heads/') || !needs.prepare.outputs.head_tag)"
     strategy:
       matrix:
-        node_version: ['12', '14']
+        node_version: ['12', '14', '16']
 
     steps:
       - name: Check out the code
         uses: actions/checkout@v2.4.0
 
       - name: Set up Node.js environment
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
           node-version: ${{ matrix.node_version }}
+          cache: npm
 
-      - name: Cache Node modules
-        uses: actions/cache@v2.1.7
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node_version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node_version }}-
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Update npm
+        run: npm i -g npm@latest
 
       - name: Clean install and test
         run: npm cit
