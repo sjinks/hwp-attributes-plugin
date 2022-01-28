@@ -57,7 +57,7 @@ describe('HwpAttributesPlugin', (): void => {
         });
 
         compiler.outputFileSystem = filesystem;
-        compiler.run((err?: Error): void => {
+        compiler.run((err): void => {
             try {
                 expect(err).toBeFalsy();
                 const html = getOutput();
@@ -96,7 +96,7 @@ describe('HwpAttributesPlugin', (): void => {
         });
 
         compiler.outputFileSystem = filesystem;
-        compiler.run((err?: Error): void => {
+        compiler.run((err): void => {
             try {
                 expect(err).toBeFalsy();
                 const html = getOutput();
