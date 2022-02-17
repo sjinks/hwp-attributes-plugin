@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "eslint-formatter-gha": "^1.2.0",
-    "minimatch": "^3.0.4"
+    "minimatch": "^5.0.0"
   },
   "peerDependencies": {
     "html-webpack-plugin": "^4.0.0 || ^5.0.0-"
