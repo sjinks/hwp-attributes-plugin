@@ -30,9 +30,6 @@ jobs:
           node-version: lts/*
           cache: npm
 
-      - name: Update npm
-        run: npm i -g npm@latest
-
       - name: Run clean install
         run: npm ci
 
