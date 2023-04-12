@@ -1,6 +1,6 @@
 import type webpack from 'webpack';
 import HtmlWebpackPlugin, { HtmlTagObject } from 'html-webpack-plugin';
-import minimatch from 'minimatch';
+import { minimatch } from 'minimatch';
 
 export interface Options {
     module?: string[];
