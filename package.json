@@ -1,6 +1,6 @@
 {
   "name": "hwp-attributes-plugin",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Plugin to add various attributes to script tags injected by html-webpack-plugin",
   "main": "dist/index.js",
   "scripts": {
