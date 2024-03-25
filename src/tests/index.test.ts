@@ -1,5 +1,5 @@
 import path from 'path';
-import webpack from 'webpack';
+import webpack, { type Compiler } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { fs, vol } from 'memfs';
 import cheerio from 'cheerio';
@@ -39,7 +39,7 @@ const filesystem = {
     readFile: fs.readFile,
     relative: path.relative,
     dirname: path.dirname,
-};
+} as Compiler['outputFileSystem'];
 
 function getOutput(): string {
     const htmlFile = '/build/index.html';
