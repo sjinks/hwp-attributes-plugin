@@ -2,7 +2,7 @@ import path from 'path';
 import webpack, { type Compiler } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { fs, vol } from 'memfs';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { HwpAttributesPlugin } from '../';
 
 const hwpOptions: HtmlWebpackPlugin.Options = {
@@ -60,12 +60,12 @@ describe('HwpAttributesPlugin', (): void => {
             try {
                 expect(err).toBeFalsy();
                 const html = getOutput();
-                const $ = cheerio.load(html);
+                const $ = load(html);
 
                 const scripts = $('script');
                 expect(scripts.get()).toHaveLength(3);
-                scripts.each((index, element: cheerio.Element): void => {
-                    const keys = Object.keys((element as cheerio.TagElement).attribs);
+                scripts.each((index, element): void => {
+                    const keys = Object.keys(element.attribs);
                     expect(keys).toContain('src');
                     expect(keys).not.toContain('type');
                     expect(keys).not.toContain('nomodule');
@@ -99,7 +99,7 @@ describe('HwpAttributesPlugin', (): void => {
             try {
                 expect(err).toBeFalsy();
                 const html = getOutput();
-                const $ = cheerio.load(html);
+                const $ = load(html);
 
                 const script1 = $('script[src^="script1"]');
                 const script2 = $('script[src^="script2"]');
@@ -109,20 +109,20 @@ describe('HwpAttributesPlugin', (): void => {
                 expect(script2.get()).toHaveLength(1);
                 expect(script3.get()).toHaveLength(1);
 
-                let keys = Object.keys((script1.get(0) as cheerio.TagElement).attribs);
+                let keys = Object.keys(script1.get(0)!.attribs);
                 expect(keys).toContain('type');
-                expect((script1.get(0) as cheerio.TagElement).attribs['type']).toBe('module');
+                expect(script1.get(0)!.attribs['type']).toBe('module');
                 expect(keys).not.toContain('nomodule');
                 expect(keys).not.toContain('async');
                 expect(keys).not.toContain('defer');
 
-                keys = Object.keys((script2.get(0) as cheerio.TagElement).attribs);
+                keys = Object.keys(script2.get(0)!.attribs);
                 expect(keys).not.toContain('type');
                 expect(keys).not.toContain('nomodule');
                 expect(keys).toContain('async');
                 expect(keys).toContain('defer');
 
-                keys = Object.keys((script3.get(0) as cheerio.TagElement).attribs);
+                keys = Object.keys(script3.get(0)!.attribs);
                 expect(keys).not.toContain('type');
                 expect(keys).toContain('nomodule');
                 expect(keys).not.toContain('async');
