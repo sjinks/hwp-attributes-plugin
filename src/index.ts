@@ -1,4 +1,4 @@
-import type webpack from 'webpack';
+import type { Compilation, Compiler } from 'webpack';
 import HtmlWebpackPlugin, { type HtmlTagObject } from 'html-webpack-plugin';
 import { minimatch } from 'minimatch';
 
@@ -12,23 +12,23 @@ export interface Options {
 const PLUGIN = 'HwpAttributesPlugin';
 
 export class HwpAttributesPlugin {
-    private _options: Required<Options>;
+    private readonly _options: Required<Options>;
 
     public constructor(options: Options = {}) {
         this._options = {
-            module: options.module || [],
-            nomodule: options.nomodule || [],
-            async: options.async || [],
-            defer: options.defer || [],
+            module: options.module ?? [],
+            nomodule: options.nomodule ?? [],
+            async: options.async ?? [],
+            defer: options.defer ?? [],
         };
     }
 
-    public apply(compiler: webpack.Compiler): void {
-        compiler.hooks.compilation.tap(PLUGIN, (compilation: webpack.Compilation): void => {
+    public apply(compiler: Compiler): void {
+        compiler.hooks.compilation.tap(PLUGIN, (compilation: Compilation): void => {
             const hooks = HtmlWebpackPlugin.getHooks(compilation);
-            hooks.alterAssetTags.tapAsync(PLUGIN, (data, cb): unknown => {
+            hooks.alterAssetTags.tapAsync(PLUGIN, (data, cb): void => {
                 data.assetTags.scripts = this._transformAssets(data.assetTags.scripts);
-                return cb(null, data);
+                cb(null, data);
             });
         });
     }
