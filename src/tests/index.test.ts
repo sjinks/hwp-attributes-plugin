@@ -1,6 +1,7 @@
 import { equal } from 'node:assert/strict';
-import path from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { afterEach, describe, it } from 'node:test';
+// eslint-disable-next-line import/no-named-as-default
 import webpack, { type Compiler, type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { fs, vol } from 'memfs';
@@ -16,15 +17,15 @@ const hwpOptions: HtmlWebpackPlugin.Options = {
         removeRedundantAttributes: true,
     },
     showErrors: true,
-    template: path.join(__dirname, './data/index.html'),
+    template: join(__dirname, './data/index.html'),
 };
 
 const webpackConfig: Configuration = {
     mode: 'development',
     entry: {
-        script1: path.join(__dirname, './data/script1.js'),
-        script2: path.join(__dirname, './data/script2.js'),
-        polyfills: path.join(__dirname, './data/polyfills.js'),
+        script1: join(__dirname, './data/script1.js'),
+        script2: join(__dirname, './data/script2.js'),
+        polyfills: join(__dirname, './data/polyfills.js'),
     },
     output: {
         path: '/build',
@@ -32,15 +33,15 @@ const webpackConfig: Configuration = {
 };
 
 const filesystem = {
-    join: path.join,
-    mkdir: fs.mkdir,
-    rmdir: fs.rmdir,
-    unlink: fs.unlink,
-    writeFile: fs.writeFile,
-    stat: fs.stat,
-    readFile: fs.readFile,
-    relative: path.relative,
-    dirname: path.dirname,
+    join,
+    mkdir: fs.mkdir.bind(fs),
+    rmdir: fs.rmdir.bind(fs),
+    unlink: fs.unlink.bind(fs),
+    writeFile: fs.writeFile.bind(fs),
+    stat: fs.stat.bind(fs),
+    readFile: fs.readFile.bind(fs),
+    relative,
+    dirname,
 } as Compiler['outputFileSystem'];
 
 function getOutput(): string {
@@ -48,10 +49,10 @@ function getOutput(): string {
     return fs.readFileSync(htmlFile).toString('utf8');
 }
 
-describe('HwpAttributesPlugin', (): void => {
+void describe('HwpAttributesPlugin', (): void => {
     afterEach((): void => vol.reset());
 
-    it('should do nothing with empty config', (_, done): void => {
+    void it('should do nothing with empty config', (_, done): void => {
         const compiler = webpack({
             ...webpackConfig,
             plugins: [new HtmlWebpackPlugin(hwpOptions), new HwpAttributesPlugin()],
@@ -82,7 +83,7 @@ describe('HwpAttributesPlugin', (): void => {
         });
     });
 
-    it('should add proper attributes to matched items', (_, done): void => {
+    void it('should add proper attributes to matched items', (_, done): void => {
         const compiler = webpack({
             ...webpackConfig,
             plugins: [
@@ -113,7 +114,7 @@ describe('HwpAttributesPlugin', (): void => {
 
                 let keys = Object.keys(script1.get(0)!.attribs);
                 equal(keys.includes('type'), true);
-                equal(script1.get(0)!.attribs['type'], 'module');
+                equal(script1.get(0)!.attribs.type, 'module');
                 equal(keys.includes('nomodule'), false);
                 equal(keys.includes('async'), false);
                 equal(keys.includes('defer'), false);
