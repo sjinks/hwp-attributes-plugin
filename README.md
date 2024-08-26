@@ -1,6 +1,6 @@
 # hwp-attributes-plugin
 
-[![Build & Test CI](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/build-test.yml/badge.svg)](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/build-test.yml)
+[![Build and Test](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/build.yml)
 [![CodeQL](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/codeql.yml/badge.svg)](https://github.com/sjinks/hwp-attributes-plugin/actions/workflows/codeql.yml)
 
 Plugin to add various attributes to script tags injected by [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)
