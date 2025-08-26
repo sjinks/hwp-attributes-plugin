@@ -1,4 +1,4 @@
-import { equal } from 'node:assert/strict';
+import { equal, ok } from 'node:assert/strict';
 import { dirname, join, relative } from 'node:path';
 import { afterEach, describe, it } from 'node:test';
 import webpack, { type Compiler, type Configuration } from 'webpack';
@@ -57,6 +57,8 @@ void describe('HwpAttributesPlugin', (): void => {
             plugins: [new HtmlWebpackPlugin(hwpOptions), new HwpAttributesPlugin()],
         });
 
+        ok(compiler);
+
         compiler.outputFileSystem = filesystem;
         compiler.run((err): void => {
             try {
@@ -95,6 +97,8 @@ void describe('HwpAttributesPlugin', (): void => {
                 }),
             ],
         });
+
+        ok(compiler);
 
         compiler.outputFileSystem = filesystem;
         compiler.run((err): void => {
