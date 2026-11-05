@@ -11,6 +11,8 @@ Plugin to add various attributes to script tags injected by [html-webpack-plugin
 npm i -D hwp-attributes-plugin
 ```
 
+Requires Node.js 20 or Node.js 22 and later.
+
 ## Usage
 
 ```js
