@@ -140,4 +140,40 @@ void describe('HwpAttributesPlugin', (): void => {
             }
         });
     });
+
+    void it('supports minimatch patterns and module precedence', (_, done): void => {
+        const compiler = webpack({
+            ...webpackConfig,
+            plugins: [
+                new HtmlWebpackPlugin(hwpOptions),
+                new HwpAttributesPlugin({
+                    module: ['script{1,2}.js'],
+                    nomodule: ['*.js'],
+                    async: ['!polyfills.js'],
+                }),
+            ],
+        });
+
+        ok(compiler);
+        compiler.outputFileSystem = filesystem;
+        compiler.run((err): void => {
+            try {
+                equal(err, null);
+                const $ = load(getOutput());
+                for (const name of ['script1', 'script2']) {
+                    const attributes = $(`script[src="${name}.js"]`).get(0)!.attribs;
+                    equal(attributes.type, 'module');
+                    equal('nomodule' in attributes, false);
+                    equal('async' in attributes, true);
+                }
+
+                const polyfills = $('script[src="polyfills.js"]').get(0)!.attribs;
+                equal('nomodule' in polyfills, true);
+                equal('async' in polyfills, false);
+                setImmediate(done);
+            } catch (e) {
+                setImmediate(done, e);
+            }
+        });
+    });
 });
